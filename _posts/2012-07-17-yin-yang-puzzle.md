@@ -219,48 +219,48 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
 
 1. First, @* will be printed, and we will invoke:
 
-    (c1 (lambda (k)
-          (display #\*)
-          (c1 k)))
+        (c1 (lambda (k)
+              (display #\*)
+              (c1 k)))
 
 2. Inside the invocation, `@*` will be printed by the body of c1, and k is now bound to `(lambda (k) (display #\*) (c1 k))`. So the program proceed to:
 
-    ((lambda (k)
-       (display #\*)
-       (c1 k))
-     (lambda (j)
-       (display #\*)
-       ((lambda (k)
-          (display #\*)
-          (c1 k)) 
-        j)))
+        ((lambda (k)
+           (display #\*)
+           (c1 k))
+         (lambda (j)
+           (display #\*)
+           ((lambda (k)
+              (display #\*)
+              (c1 k)) 
+            j)))
 
    It will print a `*`, and becomes:
 
-    (c1
-     (lambda (j)
-       (display #\*)
-       ((lambda (k)
-          (display #\*)
-          (c1 k)) 
-        j)))
+        (c1
+         (lambda (j)
+           (display #\*)
+           ((lambda (k)
+              (display #\*)
+              (c1 k)) 
+            j)))
 
    Now we have seen @*@**
 
 3. Notice that we are back to a call to c1! This is a good sign of recursion. But this time the argument is different. If we simplify it a little, we get:
 
-    (c1
-     (lambda (j)
-       (display #\*)
-       (display #\*)
-       (c1 j)))
+        (c1
+         (lambda (j)
+           (display #\*)
+           (display #\*)
+           (c1 j)))
 
 4. I think you see what's going on here. This time, c1 is called with
 
-    (lambda (j)
-       (display #\*)
-       (display #\*)
-       (c1 j))
+        (lambda (j)
+           (display #\*)
+           (display #\*)
+           (c1 j))
 
    which means "When called, display TWO \*'s, and then behave like c1
    on the argument". If we go on, the argument to c1 will be longer
@@ -269,24 +269,24 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
 
 5. Let's introspect a bit. Which part of the program is responsible for creating the ever-longer displays, and why? It is this piece from the definition of c1:
 
-    (k (lambda (j)
-         (display #\*)
-         (k j)))
+        (k (lambda (j)
+             (display #\*)
+             (k j)))
 
    Here k is c1's argument. Notice that k is always of the form:
 
-    (lambda (j)
-       (display #\*)
-       (display #\*)
-       ...
-       (c1 j))
+        (lambda (j)
+           (display #\*)
+           (display #\*)
+           ...
+           (c1 j))
 
    When k is applied, it will print the corresonding number of *'s
    inside it, and then behave like c1. The argument to k is:
 
-    (lambda (j)
-      (display #\*)
-      (k j))
+        (lambda (j)
+          (display #\*)
+          (k j))
 
    What does this mean? It says: "When called, print a * and then
    behave like k on the argument." This is how you get a "new k", with
