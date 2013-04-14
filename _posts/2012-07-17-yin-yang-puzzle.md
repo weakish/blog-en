@@ -12,7 +12,7 @@ I have a friend who is a very fast learner. I introduced him to the Scheme progr
             ((lambda (cc) (display #\*) cc) (call/cc (lambda (c) c)))))
       (yin yang))
 
-This program prints out the infinite string @*@**@***@****@*****@****** ...
+This program prints out the infinite string `@*@**@***@****@*****@******` ...
 
 Why does this happen? This took me almost a full afternoon to figure out. It is always good to have friends who feed you with questions and challenges. I'm going to document my finding here. I may want to make some animated slides (as is always a good idea) later, but for now a short note may suffice.
 
