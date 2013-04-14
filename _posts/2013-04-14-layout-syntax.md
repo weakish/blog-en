@@ -127,15 +127,15 @@ Some people say that because those languages have advanced semantics, programs a
 
 3. Renaming. We seldom choose the best names on the first shot, and good names make programs self-explanatory, so renaming is a very important and commonplace action. But in the following simple Haskell program, if we change the name from "helloworld" to "hello" and don't re-indent the rest of the lines, we will get a parse error.
 
-    helloworld z = let x = 1
-                       y = 2 in
-                     x+y+z
+       helloworld z = let x = 1
+                          y = 2 in
+                        x+y+z
 
-Because the code becomes the following after the renaming, and the second line will no longer be aligned to "x = ...", and that confuses the parser.
+   Because the code becomes the following after the renaming, and the second line will no longer be aligned to "x = ...", and that confuses the parser.
 
-    hello z = let x = 1
-                       y = 2 in
-                     x+y+z
+       hello z = let x = 1
+                          y = 2 in
+                        x+y+z
 
 A similar thing happens when we lengthen the name to something like "helloworldcup". Try it yourself. From this example, I hope you see how simple things are made frustratingly complicated by layout syntax. If you haven't been convinced, try adding more lines to the above let expression.
 
