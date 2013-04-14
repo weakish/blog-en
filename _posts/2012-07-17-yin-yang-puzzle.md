@@ -235,7 +235,7 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
           (c1 k)) 
         j)))
 
-It will print a *, and becomes:
+   It will print a *, and becomes:
 
     (c1
      (lambda (j)
@@ -245,7 +245,7 @@ It will print a *, and becomes:
           (c1 k)) 
         j)))
 
-Now we have seen @*@**
+   Now we have seen @*@**
 
 3. Notice that we are back to a call to c1! This is a good sign of recursion. But this time the argument is different. If we simplify it a little, we get:
 
