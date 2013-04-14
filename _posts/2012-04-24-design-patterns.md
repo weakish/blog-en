@@ -6,7 +6,7 @@ title: On Software Design Patterns
 
 In this post I try to answer the contraversial question
 
-Are software design patterns good or bad?
+> Are software design patterns good or bad?
 
 This used to be a long post, but I have since condensed it into a very short one, thanks to the pictures. One picture is worth ten thousand words. Hopefully you will have understood most of Richard Gabriel's [239-page book](http://dreamsongs.net/Files/PatternsOfSoftware.pdf) after looking at the following two pictures.
 
