@@ -40,7 +40,7 @@ So here we go. Let's repeat the original program here:
 
 Note that there are two binding clauses, B1 and B2, each prints a char and binds a continuation to a variable.
 
-B1 binds yin to the "current continuation" of the first call/cc. Let's call this continuation c1. Its function representation is:
+B1 binds yin to the "current continuation" of the first `call/cc`. Let's call this continuation `c1`. Its function representation is:
 
     (lambda (k)
       (let* ((yin
@@ -51,7 +51,7 @@ B1 binds yin to the "current continuation" of the first call/cc. Let's call this
 
 We can simplify it using some compiler optimization tricks. I will go very slowly here just in case you are not familiar with compiler optimizations.
 
-First, since Scheme is a strict language, k will be a pure value (with no side-effects), so we can lift the side-effect (display #\@) out:
+First, since Scheme is a strict language, k will be a pure value (with no side-effects), so we can lift the side-effect `(display #\@)` out:
 
     (lambda (k)
       (display #\@)
@@ -61,7 +61,7 @@ First, since Scheme is a strict language, k will be a pure value (with no side-e
               ((lambda (cc) (display #\*) cc) (call/cc (lambda (c) c)))))          
         (yin yang)))
 
-Now we can "partial evaluate" ((lambda (cc) cc) k) to k:
+Now we can "partial evaluate" `((lambda (cc) cc) k)` to `k`:
 
     (lambda (k)
       (display #\@)
@@ -70,7 +70,7 @@ Now we can "partial evaluate" ((lambda (cc) cc) k) to k:
               ((lambda (cc) (display #\*) cc) (call/cc (lambda (c) c)))))          
         (yin yang)))
 
-Then we can copy propagate the value of yin, k, to the body of let*, (yin yang). And now we have only one binding left:
+Then we can copy propagate the value of `yin`, `k`, to the body of `let*`, `(yin yang)`. And now we have only one binding left:
 
     (lambda (k)
       (display #\@)
@@ -86,7 +86,7 @@ Now we try to figure out the underlined continuation. It should be:
              ((lambda (cc) (display #\*) cc) j)))
         (k yang)))
 
-You see why? Since the "current continuation" means "what is going to happen with this value", it doesn't include the computation before it, namely (display #\@). Now we do a similar optimization on this continuation: lifting out the side-effect (display #\*), do some partial evaluation and copy propagation:
+You see why? Since the "current continuation" means "what is going to happen with this value", it doesn't include the computation before it, namely `(display #\@)`. Now we do a similar optimization on this continuation: lifting out the side-effect `(display #\*)`, do some partial evaluation and copy propagation:
 
 The result of this inner continuation is:
 
@@ -105,7 +105,7 @@ Now we can plug it back:
                 (k j)))))
         (k yang)))
 
-Do a similar sequence of optimizations: lifting out the first (display #\*), partial evaluation, copy propagation. And we have the final result for the value of yin. Let's name it c1 with a definition:
+Do a similar sequence of optimizations: lifting out the first `(display #\*)`, partial evaluation, copy propagation. And we have the final result for the value of yin. Let's name it c1 with a definition:
 
     (define c1
      (lambda (k)
@@ -132,7 +132,7 @@ Try it. It will behave the same as the original program. Now we do another copy 
              ((lambda (cc) (display #\*) cc) (call/cc (lambda (c) c)))))
         (c1 yang)))
 
-Since the call/cc here will not cause any side-effects (why?), we can lift (display #\*) out:
+Since the `call/cc` here will not cause any side-effects (why?), we can lift `(display #\*)` out:
 
     (begin
       (display #\@)
@@ -149,14 +149,14 @@ Now we just have to find what this underlined continuation is, and it will becom
              ((lambda (cc) cc) k)))
         (c1 yang)))
 
-After our routine sequence of optimizations we have the value of yang. Let's define it as c2:
+After our routine sequence of optimizations we have the value of yang. Let's define it as `c2`:
 
     (define c2
       (lambda (k)
         (display #\*)
         (c1 k)))
 
-Plug c1 and c2 back into the original program:
+Plug `c1` and `c2` back into the original program:
 
     (begin
       (display #\@)
@@ -174,7 +174,7 @@ And do a copy propagation:
 
 Transformed Program
 
-Now we have our final transformed and optimized program. Let's put the definitions of c1 and c2 here for an overview:
+Now we have our final transformed and optimized program. Let's put the definitions of `c1` and `c2` here for an overview:
 
     (define c1
      (lambda (k)
@@ -223,7 +223,7 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
           (display #\*)
           (c1 k)))
 
-2. Inside the invocation, @* will be printed by the body of c1, and k is now bound to (lambda (k) (display #\*) (c1 k)). So the program proceed to:
+2. Inside the invocation, `@*` will be printed by the body of c1, and k is now bound to `(lambda (k) (display #\*) (c1 k))`. So the program proceed to:
 
     ((lambda (k)
        (display #\*)
@@ -235,7 +235,7 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
           (c1 k)) 
         j)))
 
-   It will print a *, and becomes:
+   It will print a `*`, and becomes:
 
     (c1
      (lambda (j)
@@ -262,10 +262,10 @@ Now the program doesn't contain any call/cc's and is much easier to understand. 
        (display #\*)
        (c1 j))
 
-   which means "When called, display TWO *'s, and then behave like c1
+   which means "When called, display TWO \*'s, and then behave like c1
    on the argument". If we go on, the argument to c1 will be longer
-   and longer, and each time with an additional (display #\*). It will
-   print @***, and then @****, and then @*****, and so on.
+   and longer, and each time with an additional `(display #\*)`. It will
+   print `@***`, and then `@****`, and then `@*****`, and so on.
 
 5. Let's introspect a bit. Which part of the program is responsible for creating the ever-longer displays, and why? It is this piece from the definition of c1:
 
