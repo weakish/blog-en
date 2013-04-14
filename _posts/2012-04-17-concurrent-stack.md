@@ -23,7 +23,7 @@ I think the answer is No -- a "concurrent stack" hasn't really existed and will 
 
 1. If two threads interleave randomly, or there are more than two threads accessing the "stack" at the same time, then nothing can be said about the access order.
 
-1. From the above, we can see that there is a fundamental conflict between the two notions, "concurrency" and a "stack".
+From the above, we can see that there is a fundamental conflict between the two notions, "concurrency" and a "stack".
 
 > If a "stack" can be accessed concurrently, then there is no way we can maintain a LIFO order. On the other hand, if we enforce a LIFO order, then the stack cannot be accessed concurrently.
 
