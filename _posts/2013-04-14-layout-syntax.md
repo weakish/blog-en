@@ -30,8 +30,8 @@ def member(x, ls):
 
 The second definition has been produced from the first by an inadvertent TAB key, which indented the return statement one more level to the right. While the two definitions differ only in one indentation, they produce totally different results. The first definition is correct, while the second has serious bugs:
 
-1. If ls is non-empty, it will always return False whether x is an element of ls or not.
-2. If ls is empty, it will return None (instead of False) because there is no return statement after the for-loop, a "missing return statement" bug.
+1. If `ls` is non-empty, it will always return False whether `x` is an element of `ls` or not.
+2. If `ls` is empty, it will return None (instead of False) because there is no return statement after the for-loop, a "missing return statement" bug.
 
 Although this is just a minimal example, the bug may take quite some time to show up and be fixed. In order to prevent this kind of bugs from happening, I often find myself moving the cursor up-and-down in a straight line to check the alignment of the statements.
 
