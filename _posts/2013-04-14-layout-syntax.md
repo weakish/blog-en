@@ -10,19 +10,23 @@ Although the idea of layout syntax---using whitespace characters to delimit bloc
 
 Programs in layout syntax are fragile. For example, consider the following Python programs:
 
-    # correct definition
-    def member(x, ls):
-        for y in ls:
-            if x == y:
-                return True
-        return False         # correct indentation
+<pre>
+# correct definition
+def member(x, ls):
+    for y in ls:
+        if x == y:
+            return True
+    return False         # correct indentation
+</pre>
 
-    # incorrect definition
-    def member(x, ls):
-        for y in ls:
-            if x == y:
-                return True
-            return False     # incorrect indentation
+<pre>
+# incorrect definition
+def member(x, ls):
+    for y in ls:
+        if x == y:
+            return True
+        return False     # incorrect indentation
+</pre>
 
 The second definition has been produced from the first by an inadvertent TAB key, which indented the return statement one more level to the right. While the two definitions differ only in one indentation, they produce totally different results. The first definition is correct, while the second has serious bugs:
 
