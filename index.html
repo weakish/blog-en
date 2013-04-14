@@ -1,0 +1,15 @@
+---
+layout: default
+title: Surely I Am Joking
+---
+
+<blockquote>
+<a href="http://www.mindomo.com/view.htm?m=9d8e168a65ea44ee88ec69f8d11727d3">Some Random Thoughts</a>
+</blockquote>
+
+
+<ul>
+　　{% for post in site.posts %}
+　　　　<li><a href="{{ site.baseurl }}{{ post.url }}">{{ post.title }}</a></li>
+　　{% endfor %}
+</ul>
